@@ -1,0 +1,12 @@
+*.bak
+*.qar
+*.qarlog
+*.qws
+*.rpt
+*.qpf
+*.qsf
+
+db
+incremental_db
+output_files
+qar_info.json
