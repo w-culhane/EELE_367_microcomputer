@@ -47,6 +47,11 @@ architecture computer_arch of computer is
     port (clock : in std_logic;
           reset : in std_logic;
 
+          address  : in  std_logic_vector(7 downto 0);
+          write    : in  std_logic;
+          data_in  : in  std_logic_vector(7 downto 0);
+          data_out : out std_logic_vector(7 downto 0);
+
           port_in_00 : in std_logic_vector(7 downto 0);
           port_in_01 : in std_logic_vector(7 downto 0);
           port_in_02 : in std_logic_vector(7 downto 0);
@@ -82,9 +87,18 @@ architecture computer_arch of computer is
           port_out_15 : out std_logic_vector(7 downto 0));
   end component;
 
+  signal write                      : std_logic;
+  signal address, data_in, data_out : std_logic_vector(7 downto 0);
+
 begin
 
-  MEM : memory port map(clock      => clock, reset => reset,
+  MEM : memory port map(clock => clock, reset => reset,
+
+                        address  => address,   -- TODO
+                        write    => write,     -- TODO
+                        data_in  => data_in,   -- TODO
+                        data_out => data_out,  -- TODO
+
                         port_in_00 => port_in_00,
                         port_in_01 => port_in_01,
                         port_in_02 => port_in_02,

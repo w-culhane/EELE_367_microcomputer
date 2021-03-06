@@ -19,6 +19,7 @@ architecture rw_96x8_sync_arch of rw_96x8_sync is
 
 begin
 
+  -- Verify requested address is valid before fetch
   ENABLE : process (address)
   begin
     if (to_integer(unsigned(address)) >= 128
