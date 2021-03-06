@@ -61,7 +61,7 @@ begin
     end if;
   end process;
 
-  MEMFETCH : process (clock)
+  MEM : process (clock)
   begin
     if (EN = '1' and rising_edge(clock)) then
       data_out <= ROM(to_integer(unsigned(address)));
