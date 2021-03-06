@@ -12,11 +12,22 @@ end entity;
 
 architecture rw_96x8_sync_arch of rw_96x8_sync is
 
-  type RW_type is array(0 to 95) of std_logic_vector(7 downto 0);
+  type RW_type is array(128 to 223) of std_logic_vector(7 downto 0);
 
+  signal EN : std_logic;
   signal RW : RW_type;
 
 begin
+
+  ENABLE : process (address)
+  begin
+    if (to_integer(unsigned(address)) >= 128
+        and to_integer(unsigned(address)) <= 223) then
+      EN <= '1';
+    else
+      EN <= '0';
+    end if;
+  end process;
 
   MEM : process (clock)
   begin
