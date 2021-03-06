@@ -5,6 +5,7 @@
 *.rpt
 *.qpf
 *.qsf
+*.cf
 
 db
 incremental_db
