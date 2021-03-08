@@ -48,13 +48,13 @@ end entity;
 
 architecture memory_arch of memory is
 
-  component rom_128x8_sync
+  component ROM_128x8_sync
     port (clock    : in  std_logic;
           address  : in  std_logic_vector(7 downto 0);
           data_out : out std_logic_vector(7 downto 0));
   end component;
 
-  component rw_96x8_sync
+  component RW_96x8_sync
     port (clock    : in  std_logic;
           data_in  : in  std_logic_vector(7 downto 0);
           write    : in  std_logic;
@@ -62,14 +62,14 @@ architecture memory_arch of memory is
           data_out : out std_logic_vector(7 downto 0));
   end component;
 
-  signal rom_data_out, rw_data_out : std_logic_vector(7 downto 0);
+  signal ROM_data_out, RW_data_out : std_logic_vector(7 downto 0);
 
 begin
 
-  ROM : rom_128x8_sync port map (clock, address, rom_data_out);
-  RW  : rw_96x8_sync port map (clock, data_in, write, address, rw_data_out);
+  ROM : ROM_128x8_sync port map (clock, address, ROM_data_out);
+  RW  : RW_96x8_sync port map (clock, data_in, write, address, RW_data_out);
 
-  MUX : process (address, rom_data_out, rw_data_out,
+  MUX : process (address, ROM_data_out, RW_data_out,
                  port_in_00, port_in_01, port_in_02, port_in_03,
                  port_in_04, port_in_05, port_in_06, port_in_07,
                  port_in_08, port_in_09, port_in_10, port_in_11,
@@ -77,10 +77,10 @@ begin
   begin
     if ((to_integer(unsigned(address)) >= 0)
         and (to_integer(unsigned(address)) <= 127)) then
-      data_out <= rom_data_out;
+      data_out <= ROM_data_out;
     elsif ((to_integer(unsigned(address)) >= 128)
            and (to_integer(unsigned(address)) <= 223)) then
-      data_out <= rw_data_out;
+      data_out <= RW_data_out;
     else
       case (address) is
         when (x"F0") => data_out <= port_in_00;
