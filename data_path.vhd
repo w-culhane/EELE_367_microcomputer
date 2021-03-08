@@ -13,6 +13,13 @@ end entity;
 
 architecture data_path_arch of data_path is
 
+  component ALU
+    port (A, B       : in  std_logic_vector(7 downto 0);
+          ALU_sel    : in  std_logic_vector(2 downto 0);
+          NZVC       : out std_logic_vector(3 downto 0);
+          ALU_result : out std_logic_vector(7 downto 0));
+  end component;
+
   signal bus1, bus2         : std_logic_vector(7 downto 0);
   signal bus1_sel, bus2_sel : std_logic_vector(1 downto 0);
 
@@ -24,7 +31,7 @@ architecture data_path_arch of data_path is
   signal A_load, B_load    : std_logic;
   signal CCR_load          : std_logic;
   signal NZVC, CCR_result  : std_logic_vector(3 downto 0);
-  signal ALU_sel           : std_logic_vector(3 downto 0);
+  signal ALU_sel           : std_logic_vector(2 downto 0);
   signal ALU_result        : std_logic_vector(7 downto 0);
 
 begin
@@ -111,41 +118,6 @@ begin
     end if;
   end process;
 
-  ALU_PROCESS : process (A, B, ALU_sel)
-    variable Sum_uns : unsigned(8 downto 0);
-  begin
-    -- Addition
-    if (ALU_sel = "000") then
-      Sum_uns    := unsigned('0' & A) + unsigned('0' & B);
-      ALU_result <= std_logic_vector(Sum_uns(7 downto 0));
-
-      -- Negative flag (N)
-      NZVC(3) <= Sum_uns(7);
-
-      -- Zero flag (Z)
-      if (Sum_uns(7 downto 0) = x"00") then
-        NZVC(2) <= '1';
-      else
-        NZVC(2) <= '0';
-      end if;
-
-      -- Overflow flag (V)
-      if ((A(7) = '0' and B(7) = '0' and Sum_uns(7) = '1') or
-          (A(7) = '1' and B(7) = '1' and Sum_uns(7) = '0')) then
-        NZVC(1) <= '1';
-      else
-        NZVC(1) <= '0';
-      end if;
-
-      -- Carry flag (C)
-      NZVC(0) <= Sum_uns(8);
-    -- TODO Add more ALU functionality
-    -- - SUB
-    -- - AND
-    -- - OR
-    -- - INCA/DECA
-    -- - INCB/DECB
-    end if;
-  end process;
+  ALU_MAIN : ALU port map (A, B, ALU_sel, NZVC, ALU_result);
 
 end architecture;
