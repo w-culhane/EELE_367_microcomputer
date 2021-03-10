@@ -32,7 +32,7 @@ begin
 
   MEM : process (clock)
   begin
-    if (rising_edge(clock)) then
+    if (EN = '1' and rising_edge(clock)) then
       if (write = '1') then
         RW(to_integer(unsigned(address))) <= data_in;
       else
