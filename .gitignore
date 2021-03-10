@@ -1,13 +1,14 @@
 *.bak
-*.mti
+*.cf
 *.mpf
+*.mti
 *.qar
 *.qarlog
-*.qws
-*.rpt
 *.qpf
 *.qsf
-*.cf
+*.qws
+*.rpt
+*.wlf
 
 db
 incremental_db
