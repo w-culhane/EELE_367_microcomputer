@@ -72,6 +72,7 @@ begin
             end case;
           when others => next_state <= sFETCH_0;
         end case;
+      when others => next_state <= sFETCH_0;  -- TODO Remove this
     end case;
   -- TODO Finish instruction implementations
   -- TODO Add more instructions
@@ -103,6 +104,18 @@ begin
         CCR_Load <= '0';
         Bus1_Sel <= "00";
         Bus2_Sel <= "00";
+        write    <= '0';
+      when others =>                    -- TODO Remove this
+        IR_Load  <= '0';
+        MAR_Load <= '1';
+        PC_Load  <= '0';
+        PC_Inc   <= '0';
+        A_Load   <= '0';
+        B_Load   <= '0';
+        ALU_Sel  <= "000";
+        CCR_Load <= '0';
+        Bus1_Sel <= "00";
+        Bus2_Sel <= "01";
         write    <= '0';
     -- TODO
     end case;

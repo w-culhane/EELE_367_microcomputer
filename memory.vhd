@@ -58,7 +58,7 @@ architecture memory_arch of memory is
     port (clock    : in  std_logic;
           data_in  : in  std_logic_vector(7 downto 0);
           write    : in  std_logic;
-          address  : in  std_logic_vector(4 downto 0);
+          address  : in  std_logic_vector(7 downto 0);
           data_out : out std_logic_vector(7 downto 0));
   end component;
 

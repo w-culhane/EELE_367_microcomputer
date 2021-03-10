@@ -1,4 +1,6 @@
 *.bak
+*.mti
+*.mpf
 *.qar
 *.qarlog
 *.qws
@@ -11,3 +13,5 @@ db
 incremental_db
 output_files
 qar_info.json
+transcript
+work/
