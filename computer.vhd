@@ -42,7 +42,6 @@ end entity;
 
 architecture computer_arch of computer is
 
-
   component cpu
     port (clock : in std_logic;
           reset : in std_logic;
