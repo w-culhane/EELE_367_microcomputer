@@ -1,5 +1,6 @@
 *.bak
 *.cf
+*.do
 *.mpf
 *.mti
 *.qar
