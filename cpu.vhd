@@ -18,6 +18,13 @@ architecture cpu_arch of cpu is
     port (clock : in std_logic;
           reset : in std_logic;
 
+          IR_load, MAR_load  : in  std_logic;
+          PC_load, PC_inc    : in  std_logic;
+          A_load, B_load     : in  std_logic;
+          CCR_load           : in  std_logic;
+          CCR_result         : out std_logic_vector(3 downto 0);
+          bus1_sel, bus2_sel : in  std_logic_vector(1 downto 0);
+
           address     : out std_logic_vector(7 downto 0);
           from_memory : in  std_logic_vector(7 downto 0);
           to_memory   : out std_logic_vector(7 downto 0));
@@ -61,7 +68,12 @@ begin
                               ALU_sel, CCR_result, CCR_load,
                               bus1_sel, bus2_sel, write);
 
-  DP : data_path port map (clock, reset, address,
-                           from_memory, to_memory);
+  DP : data_path port map (clock, reset,
+                           IR_load, MAR_load,
+                           PC_load, PC_inc,
+                           A_load, B_load,
+                           CCR_load, CCR_result,
+                           bus1_sel, bus2_sel,
+                           address, from_memory, to_memory);
 
 end architecture;

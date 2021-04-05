@@ -6,6 +6,13 @@ entity data_path is
   port (clock : in std_logic;
         reset : in std_logic;
 
+        IR_load, MAR_load  : in  std_logic;
+        PC_load, PC_inc    : in  std_logic;
+        A_load, B_load     : in  std_logic;
+        CCR_load           : in  std_logic;
+        CCR_result         : out std_logic_vector(3 downto 0);
+        bus1_sel, bus2_sel : in  std_logic_vector(1 downto 0);
+
         address     : out std_logic_vector(7 downto 0);
         from_memory : in  std_logic_vector(7 downto 0);
         to_memory   : out std_logic_vector(7 downto 0));
@@ -20,19 +27,14 @@ architecture data_path_arch of data_path is
           ALU_result : out std_logic_vector(7 downto 0));
   end component;
 
-  signal bus1, bus2         : std_logic_vector(7 downto 0);
-  signal bus1_sel, bus2_sel : std_logic_vector(1 downto 0);
+  signal bus1, bus2 : std_logic_vector(7 downto 0);
 
   signal IR, MAR, PC, A, B : std_logic_vector(7 downto 0);
 
-  signal IR_load, MAR_load : std_logic;
-  signal PC_load, PC_inc   : std_logic;
-  signal PC_uns            : unsigned(7 downto 0);
-  signal A_load, B_load    : std_logic;
-  signal CCR_load          : std_logic;
-  signal NZVC, CCR_result  : std_logic_vector(3 downto 0);
-  signal ALU_sel           : std_logic_vector(2 downto 0);
-  signal ALU_result        : std_logic_vector(7 downto 0);
+  signal PC_uns     : unsigned(7 downto 0);
+  signal NZVC       : std_logic_vector(3 downto 0);
+  signal ALU_sel    : std_logic_vector(2 downto 0);
+  signal ALU_result : std_logic_vector(7 downto 0);
 
 begin
 
