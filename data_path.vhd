@@ -99,7 +99,7 @@ begin
     if (reset = '0') then
       A <= x"00";
     elsif (A_load = '1' and rising_edge(clock)) then
-      A <= Bus2;
+      A <= bus2;
     end if;
   end process;
 
@@ -108,7 +108,7 @@ begin
     if (reset = '0') then
       B <= x"00";
     elsif (B_load = '1' and rising_edge(clock)) then
-      B <= Bus2;
+      B <= bus2;
     end if;
   end process;
 
