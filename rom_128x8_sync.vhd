@@ -14,7 +14,7 @@ architecture ROM_128x8_sync_arch of ROM_128x8_sync is
 
   -- Loading/storing
   constant LDA_IMM : std_logic_vector(7 downto 0) := x"86";
-  -- constant LDA_DIR : std_logic_vector(7 downto 0) := x"87";
+  constant LDA_DIR : std_logic_vector(7 downto 0) := x"87";
   -- constant LDB_IMM : std_logic_vector(7 downto 0) := x"88";
   -- constant LDB_DIR : std_logic_vector(7 downto 0) := x"89";
   -- constant STA_DIR : std_logic_vector(7 downto 0) := x"96";
@@ -42,7 +42,9 @@ architecture ROM_128x8_sync_arch of ROM_128x8_sync is
   -- constant BCC : std_logic_vector(7 downto 0) := x"28";
 
   constant ROM : ROM_type := (0      => LDA_IMM,
-                              1      => x"AA",
+                              1      => x"CC",
+                              8      => LDA_DIR,
+                              9      => x"80",
                               others => x"00");
 
   signal EN : std_logic;

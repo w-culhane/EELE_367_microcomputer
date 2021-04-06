@@ -15,7 +15,8 @@ architecture RW_96x8_sync_arch of RW_96x8_sync is
   type RW_type is array(128 to 223) of std_logic_vector(7 downto 0);
 
   signal EN : std_logic;
-  signal RW : RW_type;
+  signal RW : RW_type := (128    => x"AA",
+                          others => x"00");
 
 begin
 

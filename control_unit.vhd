@@ -21,7 +21,7 @@ end entity;
 architecture control_unit_arch of control_unit is
 
   constant LDA_IMM : std_logic_vector(7 downto 0) := x"86";
-  -- constant LDA_DIR : std_logic_vector(7 downto 0) := x"87";
+  constant LDA_DIR : std_logic_vector(7 downto 0) := x"87";
   -- constant STA_DIR : std_logic_vector(7 downto 0) := x"96";
   -- constant ADD_AB  : std_logic_vector(7 downto 0) := x"42";
   -- constant BRA     : std_logic_vector(7 downto 0) := x"20";
@@ -30,8 +30,8 @@ architecture control_unit_arch of control_unit is
   type state_type is
     (sFETCH_0, sFETCH_1, sFETCH_2,
      sDECODE_3,
-     sLDA_IMM_4, sLDA_IMM_5, sLDA_IMM_6);
-  -- sLDA_DIR_4, sLDA_DIR_5, sLDA_DIR_6, sLDA_DIR_7, sLDA_DIR_8,
+     sLDA_IMM_4, sLDA_IMM_5, sLDA_IMM_6,
+     sLDA_DIR_4, sLDA_DIR_5, sLDA_DIR_6, sLDA_DIR_7, sLDA_DIR_8);
   -- sSTA_DIR_4, sSTA_DIR_5, sSTA_DIR_6, sSTA_DIR_7,
   -- sADD_AB_4,
   -- sBRA_4, sBRA_5, sBRA_6,
@@ -59,7 +59,7 @@ begin
       when sDECODE_3 =>
         case (IR) is
           when LDA_IMM => next_state <= sLDA_IMM_4;
-          -- when LDA_DIR => next_state <= sLDA_DIR_4;
+          when LDA_DIR => next_state <= sLDA_DIR_4;
           -- when STA_DIR => next_state <= sSTA_DIR_4;
           -- when ADD_AB  => next_state <= sADD_AB_4;
           -- when BRA     => next_state <= sBRA_4;
@@ -77,10 +77,15 @@ begin
       when sLDA_IMM_5 => next_state <= sLDA_IMM_6;
       when sLDA_IMM_6 => next_state <= sFETCH_0;
 
+      -- LDA_DIR
+      when sLDA_DIR_4 => next_state <= sLDA_DIR_5;
+      when sLDA_DIR_5 => next_state <= sLDA_DIR_6;
+      when sLDA_DIR_6 => next_state <= sLDA_DIR_7;
+      when sLDA_DIR_7 => next_state <= sLDA_DIR_8;
+      when sLDA_DIR_8 => next_state <= sFETCH_0;
+
       when others => next_state <= sFETCH_0;  -- TODO Remove this
     end case;
-  -- TODO Finish instruction implementations
-  -- TODO Add more instructions
   end process;
 
   OUTPUT_LOGIC : process (current_state)
@@ -161,6 +166,68 @@ begin
         Bus2_sel <= "00";
         write    <= '0';
       when sLDA_IMM_6 =>
+        IR_load  <= '0';
+        MAR_load <= '0';
+        PC_load  <= '0';
+        PC_inc   <= '0';
+        A_load   <= '1';
+        B_load   <= '0';
+        ALU_sel  <= "000";
+        CCR_load <= '0';
+        Bus1_sel <= "00";
+        Bus2_sel <= "10";               -- Memory
+        write    <= '0';
+
+      -- LDA_DIR
+      when sLDA_DIR_4 =>
+        IR_load  <= '0';
+        MAR_load <= '1';
+        PC_load  <= '0';
+        PC_inc   <= '0';
+        A_load   <= '0';
+        B_load   <= '0';
+        ALU_sel  <= "000";
+        CCR_load <= '0';
+        Bus1_sel <= "00";               -- PC
+        Bus2_sel <= "01";               -- Bus1
+        write    <= '0';
+      when sLDA_DIR_5 =>
+        IR_load  <= '0';
+        MAR_load <= '0';
+        PC_load  <= '0';
+        PC_inc   <= '1';
+        A_load   <= '0';
+        B_load   <= '0';
+        ALU_sel  <= "000";
+        CCR_load <= '0';
+        Bus1_sel <= "00";
+        Bus2_sel <= "00";
+        write    <= '0';
+      when sLDA_DIR_6 =>
+        IR_load  <= '0';
+        MAR_load <= '1';
+        PC_load  <= '0';
+        PC_inc   <= '0';
+        A_load   <= '0';
+        B_load   <= '0';
+        ALU_sel  <= "000";
+        CCR_load <= '0';
+        Bus1_sel <= "00";
+        Bus2_sel <= "10";               -- Memory
+        write    <= '0';
+      when sLDA_DIR_7 =>
+        IR_load  <= '0';
+        MAR_load <= '0';
+        PC_load  <= '0';
+        PC_inc   <= '0';
+        A_load   <= '0';
+        B_load   <= '0';
+        ALU_sel  <= "000";
+        CCR_load <= '0';
+        Bus1_sel <= "00";
+        Bus2_sel <= "00";
+        write    <= '0';
+      when sLDA_DIR_8 =>
         IR_load  <= '0';
         MAR_load <= '0';
         PC_load  <= '0';
