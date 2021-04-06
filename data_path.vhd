@@ -6,6 +6,7 @@ entity data_path is
   port (clock : in std_logic;
         reset : in std_logic;
 
+        IR                 : out std_logic_vector(7 downto 0);
         IR_load, MAR_load  : in  std_logic;
         PC_load, PC_inc    : in  std_logic;
         A_load, B_load     : in  std_logic;
@@ -29,7 +30,7 @@ architecture data_path_arch of data_path is
 
   signal bus1, bus2 : std_logic_vector(7 downto 0);
 
-  signal IR, MAR, PC, A, B : std_logic_vector(7 downto 0);
+  signal MAR, PC, A, B : std_logic_vector(7 downto 0);
 
   signal PC_uns     : unsigned(7 downto 0);
   signal NZVC       : std_logic_vector(3 downto 0);
