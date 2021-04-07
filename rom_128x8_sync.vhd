@@ -41,15 +41,7 @@ architecture ROM_128x8_sync_arch of ROM_128x8_sync is
   -- constant BCS : std_logic_vector(7 downto 0) := x"27";
   -- constant BCC : std_logic_vector(7 downto 0) := x"28";
 
-  constant ROM : ROM_type := (0      => LDA_IMM,
-                              1      => x"CC",
-                              4      => STA_DIR,
-                              5      => x"E0",
-                              6      => BRA,
-                              7      => x"00",
-                              8      => LDA_DIR,
-                              9      => x"80",
-                              others => x"00");
+  constant ROM : ROM_type := (others => x"00");
 
   signal EN : std_logic;
 
