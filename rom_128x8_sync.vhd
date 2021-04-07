@@ -31,7 +31,7 @@ architecture ROM_128x8_sync_arch of ROM_128x8_sync is
   -- constant DECB   : std_logic_vector(7 downto 0) := x"49";
 
   -- Control flow/branching
-  -- constant BRA : std_logic_vector(7 downto 0) := x"20";
+  constant BRA : std_logic_vector(7 downto 0) := x"20";
   -- constant BMI : std_logic_vector(7 downto 0) := x"21";
   -- constant BPL : std_logic_vector(7 downto 0) := x"22";
   -- constant BEQ : std_logic_vector(7 downto 0) := x"23";
@@ -45,6 +45,8 @@ architecture ROM_128x8_sync_arch of ROM_128x8_sync is
                               1      => x"CC",
                               4      => STA_DIR,
                               5      => x"E0",
+                              6      => BRA,
+                              7      => x"00",
                               8      => LDA_DIR,
                               9      => x"80",
                               others => x"00");
