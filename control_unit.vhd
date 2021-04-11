@@ -91,7 +91,7 @@ begin
           -- when '1'    => next_state <= sBEQ_4;
           -- when others => next_state <= sBEQ_7;
           -- end case;
-          when others  => next_state <= sFETCH_0;  -- TODO Remove this
+          when others  => next_state <= sFETCH_0;
         end case;
 
       -- LDA_IMM
@@ -117,7 +117,7 @@ begin
       when sBRA_5 => next_state <= sBRA_6;
       when sBRA_6 => next_state <= sFETCH_0;
 
-      when others => next_state <= sFETCH_0;  -- TODO Remove this
+      when others => next_state <= sFETCH_0;
     end case;
   end process;
 
@@ -372,7 +372,7 @@ begin
         Bus2_sel <= "10";
         write    <= '0';
 
-      when others =>                    -- TODO Remove this
+      when others =>
         IR_load  <= '0';
         MAR_load <= '0';
         PC_load  <= '0';
