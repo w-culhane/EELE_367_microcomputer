@@ -62,8 +62,14 @@ begin
 
   VCLK : clock_div_prec port map (reset, SW(9 downto 8), CLOCK_50, clock_div);
 
-  -- TODO Resolve conflicting KEY(0) map
-  MAIN : computer port map (clock_div, reset, "000000" & KEY(1 downto 0),
+  -- TODO Bind buttons
+  MAIN : computer port map (clock_div, reset,
+
+                            SW(7 downto 0), x"00", x"00", x"00",
+                            x"00", x"00", x"00", x"00",
+                            x"00", x"00", x"00", x"00",
+                            x"00", x"00", x"00", x"00",
+
                             POUT0, POUT1, POUT2, POUT3,
                             POUT4, POUT5, POUT6, POUT7,
                             POUT8, POUT9, POUT10, POUT11,
