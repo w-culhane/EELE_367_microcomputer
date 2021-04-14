@@ -1,5 +1,5 @@
 library IEEE;
-use ieee.std_logic_1164.all;
+use IEEE.std_logic_1164.all;
 
 entity char_decoder is
   port (BIN_IN  : in  std_logic_vector(3 downto 0);

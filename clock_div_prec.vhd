@@ -1,6 +1,6 @@
 library IEEE;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
 
 entity clock_div_prec is
   port (sel       : in  std_logic_vector(1 downto 0);
