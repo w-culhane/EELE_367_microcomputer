@@ -6,7 +6,7 @@ entity top is
   port (CLOCK_50 : in  std_logic;
         KEY      : in  std_logic_vector(1 downto 0);
         SW       : in  std_logic_vector(9 downto 0);
-        LEDR     : out std_logic_vector(7 downto 0);
+        LEDR     : out std_logic_vector(9 downto 0);
         HEX0     : out std_logic_vector(6 downto 0);
         HEX1     : out std_logic_vector(6 downto 0);
         HEX2     : out std_logic_vector(6 downto 0);
@@ -75,7 +75,7 @@ begin
                             POUT8, POUT9, POUT10, POUT11,
                             POUT12, POUT13, POUT14, POUT15);
 
-  LEDR <= POUT0;
+  LEDR <= "00" & POUT0;
 
   CD0 : char_decoder port map (POUT1(3 downto 0), HEX0);
   CD1 : char_decoder port map (POUT1(7 downto 4), HEX1);
