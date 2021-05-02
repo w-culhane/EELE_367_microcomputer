@@ -23,7 +23,7 @@ architecture control_unit_arch of control_unit is
   -- Loading/storing
   constant LDA_IMM : std_logic_vector(7 downto 0) := x"86";
   constant LDA_DIR : std_logic_vector(7 downto 0) := x"87";
-  -- constant LDB_IMM : std_logic_vector(7 downto 0) := x"88";
+  constant LDB_IMM : std_logic_vector(7 downto 0) := x"88";
   -- constant LDB_DIR : std_logic_vector(7 downto 0) := x"89";
   constant STA_DIR : std_logic_vector(7 downto 0) := x"96";
   -- constant STB_DIR : std_logic_vector(7 downto 0) := x"97";
@@ -53,6 +53,7 @@ architecture control_unit_arch of control_unit is
     (sFETCH_0, sFETCH_1, sFETCH_2,
      sDECODE_3,
      sLDA_IMM_4, sLDA_IMM_5, sLDA_IMM_6,
+     sLDB_IMM_4, sLDB_IMM_5, sLDB_IMM_6,
      sLDA_DIR_4, sLDA_DIR_5, sLDA_DIR_6, sLDA_DIR_7, sLDA_DIR_8,
      sSTA_DIR_4, sSTA_DIR_5, sSTA_DIR_6, sSTA_DIR_7,
      sBRA_4, sBRA_5, sBRA_6);
@@ -81,6 +82,7 @@ begin
       when sDECODE_3 =>
         case (IR) is
           when LDA_IMM => next_state <= sLDA_IMM_4;
+          when LDB_IMM => next_state <= sLDB_IMM_4;
           when LDA_DIR => next_state <= sLDA_DIR_4;
           when STA_DIR => next_state <= sSTA_DIR_4;
           when BRA     => next_state <= sBRA_4;
@@ -98,6 +100,11 @@ begin
       when sLDA_IMM_4 => next_state <= sLDA_IMM_5;
       when sLDA_IMM_5 => next_state <= sLDA_IMM_6;
       when sLDA_IMM_6 => next_state <= sFETCH_0;
+
+      -- LDB_IMM
+      when sLDB_IMM_4 => next_state <= sLDB_IMM_5;
+      when sLDB_IMM_5 => next_state <= sLDB_IMM_6;
+      when sLDB_IMM_6 => next_state <= sFETCH_0;
 
       -- LDA_DIR
       when sLDA_DIR_4 => next_state <= sLDA_DIR_5;
@@ -216,6 +223,44 @@ begin
         PC_inc   <= '0';
         A_load   <= '1';
         B_load   <= '0';
+        ALU_sel  <= "000";
+        CCR_load <= '0';
+        Bus1_sel <= "00";
+        Bus2_sel <= "10";
+        write    <= '0';
+
+      -- LDB_IMM
+      when sLDB_IMM_4 =>
+        IR_load  <= '0';
+        MAR_load <= '1';
+        PC_load  <= '0';
+        PC_inc   <= '0';
+        A_load   <= '0';
+        B_load   <= '0';
+        ALU_sel  <= "000";
+        CCR_load <= '0';
+        Bus1_sel <= "00";
+        Bus2_sel <= "01";
+        write    <= '0';
+      when sLDB_IMM_5 =>
+        IR_load  <= '0';
+        MAR_load <= '0';
+        PC_load  <= '0';
+        PC_inc   <= '1';
+        A_load   <= '0';
+        B_load   <= '0';
+        ALU_sel  <= "000";
+        CCR_load <= '0';
+        Bus1_sel <= "00";
+        Bus2_sel <= "00";
+        write    <= '0';
+      when sLDB_IMM_6 =>
+        IR_load  <= '0';
+        MAR_load <= '0';
+        PC_load  <= '0';
+        PC_inc   <= '0';
+        A_load   <= '0';
+        B_load   <= '1';
         ALU_sel  <= "000";
         CCR_load <= '0';
         Bus1_sel <= "00";
